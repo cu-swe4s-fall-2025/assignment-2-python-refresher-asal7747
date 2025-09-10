@@ -1,9 +1,16 @@
 def get_column(file_name, query_column, query_value, result_column=1):
+    """
+    Return values from result_column for rows where
+    parts[query_column] == query_value.
+    """
     # Create an empty list to store matching values
     results = []
 
     # Open the file and read it line by line
     with open(file_name, "r", encoding="utf-8") as f:
+        # Skip header row once (do not treat column names as data)
+        _header = f.readline()
+
         for line in f:
             # Remove new line and extra spaces
             line = line.strip()
