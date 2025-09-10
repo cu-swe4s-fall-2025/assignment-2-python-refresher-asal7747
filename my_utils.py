@@ -26,4 +26,3 @@ def get_column(file_name, query_column, query_value, result_column=1):
 
     # Return the collected values
     return results
-
