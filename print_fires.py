@@ -3,6 +3,10 @@
 # This version accepts 1-based column numbers from the user and converts
 # to 0-based.
 
+# Uses get_column(result_column=...) with a default available (step 9);
+# updated per step 10.
+
+
 import argparse
 from my_utils import get_column
 
@@ -60,6 +64,7 @@ def main():
             file_name=args.file,
             query_column=query_col_0,
             query_value=args.country,
+            # Step 10: use the named argument added in step 9
             result_column=col0,
         )
         for v in values:
@@ -68,7 +73,10 @@ def main():
             except ValueError:
                 continue
 
+
     print(grand_total)
+
+
 
 if __name__ == "__main__":
     main()
