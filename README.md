@@ -1,26 +1,47 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/_G_SdF8U)
-
-# Python Refresher - Assignment 2
+# Assignment 3 – Best Practices
 
 ## Overview
+Command-line tool that sums a fires column for a selected country from a CSV using zero-based column indexes.
 
-This repository contains a small Python refresher assignment that reads an agricultural CO₂ dataset and prints a single number computed for a selected country.
-
-The script `print_fires.py` uses a helper function `get_column()` to filter rows by country and collect values before summing selected fire-related CO₂ columns. Column numbers are provided as 1-based indices to match the CSV header, then converted to 0-based internally.
-
-## Data
-
-Place `Agrofood_co2_emission.csv` in the `data/` directory as `data/Agrofood_co2_emission.csv`.
+## Requirements
+- Python 3.8+
+- Data file: data/Agrofood_co2_emission.csv
 
 ## Usage
-
-Run with the helper script:
-
 ```bash
-./run.sh
+# Show help
+python3 print_fires.py --help
+
+# OK example (adjust indices to the CSV if needed)
+python3 print_fires.py \
+  --country "Liechtenstein" \
+  --country_column 0 \
+  --fires_column 2 \
+  --file_name data/Agrofood_co2_emission.csv
 ```
 
-## Notes
+## Error examples
+```bash
+# Missing file
+python3 print_fires.py \
+  --country "Liechtenstein" \
+  --country_column 0 \
+  --fires_column 2 \
+  --file_name data/DOES_NOT_EXIST.csv
 
-- `print_fires.py` uses `argparse` for flags like `--country` and `--fire-cols`.
-- It accepts 1-based column numbers to match the CSV header and converts them to 0-based internally before calling `get_column()`.
+# Bad column index
+python3 print_fires.py \
+  --country "Liechtenstein" \
+  --country_column 0 \
+  --fires_column 9999 \
+  --file_name data/Agrofood_co2_emission.csv
+```
+
+## Exit codes
+- 0: success
+- 1: no matching rows for the country
+- 2: other errors (I/O or value parsing)
+
+## Notes
+- Uses argparse and a main() entry point.
+- get_column returns a list of integers and accepts numeric strings like "0.0".  
