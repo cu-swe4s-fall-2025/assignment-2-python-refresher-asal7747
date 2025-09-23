@@ -1,35 +1,43 @@
+import csv
+
+
 def get_column(file_name, query_column, query_value, result_column=1):
     """
-    Return values from result_column for rows where
-    parts[query_column] == query_value.
+    Return a list of integers from result_column for rows where
+    row[query_column] == query_value.
+
+    - Skips the header row
+    - Raises FileNotFoundError if the file is missing
+    - Raises ValueError if a matched cell is not numeric
+    - Raises IndexError if given column indexes are negative
     """
-    # Create an empty list to store matching values
-    results = []
+    if query_column < 0 or result_column < 0:
+        raise IndexError("query_column and result_column must be >= 0")
 
-    # Open the file and read it line by line
-    with open(file_name, "r", encoding="utf-8") as f:
-        # Skip header row once (do not treat column names as data)
-        _header = f.readline()
+    out = []
+    with open(file_name, newline="", encoding="utf-8") as f:
+        rows = list(csv.reader(f))
+    if not rows:
+        return out
 
-        for line in f:
-            # Remove new line and extra spaces
-            line = line.strip()
-
-            # Skip empty lines
-            if not line:
-                continue
-
-            # Split the line into a list by commas
-            parts = line.split(",")
-
-            # Make sure the indices exist before using them
-            if query_column >= len(parts) or result_column >= len(parts):
-                continue
-
-            # Check if the value in query_column matches query_value
-            if parts[query_column].strip() == query_value:
-                # Add the value from result_column to the results
-                results.append(parts[result_column].strip())
-
-    # Return the collected values
-    return results
+    data = rows[1:]  # Skip header row
+    # start=2 so row numbers match file lines
+    for i, row in enumerate(data, start=2):
+        if query_column >= len(row) or result_column >= len(row):
+            # If a particular row is short, just skip it
+            continue
+        if row[query_column].strip() == query_value:
+            cell = row[result_column].strip()
+            if cell == "":
+                raise ValueError(
+                    f"Row {i}: expected number at col {result_column}, got empty"
+                )
+            try:
+                # Accept ints or decimals (e.g., "0.0"); still return int list
+                value = int(float(cell))
+            except ValueError as e:
+                raise ValueError(
+                    f"Row {i}: expected number at col {result_column}, got {cell!r}"
+                ) from e
+            out.append(value)
+    return out
