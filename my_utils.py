@@ -41,3 +41,43 @@ def get_column(file_name, query_column, query_value, result_column=1):
                 ) from e
             out.append(value)
     return out
+
+
+def mean(values: list[int]) -> float:
+    """
+    Return the arithmetic mean of a non-empty list of integers.
+    Raises ValueError for an empty list.
+    """
+    if not values:
+        raise ValueError("mean() requires a non-empty list")
+    return sum(values) / len(values)
+
+
+def median(values: list[int]) -> float:
+    """
+    Return the median of a non-empty list of integers.
+    For even length, return the average of the two middle values as float.
+    Raises ValueError for an empty list.
+    """
+    n = len(values)
+    if n == 0:
+        raise ValueError("median() requires a non-empty list")
+    s = sorted(values)
+    mid = n // 2
+    if n % 2 == 1:
+        return float(s[mid])
+    return (s[mid - 1] + s[mid]) / 2.0
+
+
+def stdev(values: list[int]) -> float:
+    """
+    Return the sample standard deviation with Bessel's correction.
+    Requires at least two values; raises ValueError otherwise.
+    s = sqrt( sum((x - mean)^2) / (n - 1) )
+    """
+    n = len(values)
+    if n < 2:
+        raise ValueError("stdev() requires at least two values")
+    m = mean(values)
+    ss = sum((x - m) ** 2 for x in values)
+    return (ss / (n - 1)) ** 0.5
