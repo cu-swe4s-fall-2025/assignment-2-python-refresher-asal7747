@@ -2,7 +2,8 @@
 """
 Assignment 3/4: Best Practices + Testing
 
-- Uses argparse with flags: --country, --country_column, --fires_column, --file_name
+- Uses argparse with flags: --country, --country_column, --fires_column,
+  --file_name
 - Optional --op to compute mean/median/stdev on the values
 - Uses a main() entry point
 - Exit codes: 0 on success; 1 if no matching rows; 2 on errors
@@ -18,7 +19,8 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Compute fires stats for a country from a CSV"
     )
-    p.add_argument("--country", required=True, help="Exact country name to match")
+    p.add_argument("--country", required=True,
+                   help="Exact country name to match")
     p.add_argument(
         "--country_column",
         type=int,
@@ -50,7 +52,8 @@ def main() -> None:
             result_column=args.fires_column,
         )
         if not values:
-            print(f"No rows found for country={args.country!r}", file=sys.stderr)
+            print(f"No rows found for country={args.country!r}",
+                  file=sys.stderr)
             sys.exit(1)
 
         if args.op == "mean":

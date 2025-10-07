@@ -74,3 +74,17 @@ bash tests/functional/test_printfires.sh
 - CLI flags are required: `--country`, `--country_column`, `--fires_column`, `--file_name`
 - Optional `--op` selects mean, median, or stdev; if omitted, the script prints the sum of values
 - Exit codes: 0 success; 1 no matching rows; 2 other errors (I/O, parsing)
+
+# Assignment 5 – Continuous Integration
+
+## Overview
+Configured GitHub Actions to automatically validate the project on every push and on pull requests into master. The workflow runs unit tests, functional tests, and style checks to keep master stable.
+
+## CI details
+- Triggers:
+  - Push to any branch
+  - Pull requests targeting master
+- Steps:
+  - Unit tests: `python -m unittest tests/unit/test_myutils.py`
+  - Functional tests: `bash tests/functional/test_printfires.sh` (uses ssshtest)
+  - Style checks: `flake8 .` (PEP 8 with 79-char lines)

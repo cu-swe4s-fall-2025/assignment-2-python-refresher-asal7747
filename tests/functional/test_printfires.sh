@@ -70,6 +70,17 @@ run stdev_op python3 print_fires.py \
   --file_name "${csv}" \
   --op stdev
 assert_stdout
-assert_in_stdout 10314437.583439313
+stdev_val="$(echo "$stdev_op_STDOUT" | tr -d '[:space:]')"
+python3 - <<'PY'
+import math, sys
+expected = 10314437.583439313
+got = float(sys.argv[1])
+# Accept small float error
+ok = math.isclose(got, expected, rel_tol=1e-12, abs_tol=1e-9)
+print("OK" if ok else f"DIFF got={got} expected={expected}")
+sys.exit(0 if ok else 1)
+PY
+"$stdev_val"
 assert_no_stderr
 assert_exit_code 0
+
