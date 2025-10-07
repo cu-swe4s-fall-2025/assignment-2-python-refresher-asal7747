@@ -19,7 +19,8 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Compute fires stats for a country from a CSV"
     )
-    p.add_argument("--country", required=True, help="Exact country name to match")
+    p.add_argument("--country", required=True,
+                   help="Exact country name to match")
     p.add_argument(
         "--country_column",
         type=int,
@@ -51,7 +52,8 @@ def main() -> None:
             result_column=args.fires_column,
         )
         if not values:
-            print(f"No rows found for country={args.country!r}", file=sys.stderr)
+            print(f"No rows found for country={args.country!r}",
+                  file=sys.stderr)
             sys.exit(1)
 
         if args.op == "mean":

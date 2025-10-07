@@ -12,7 +12,8 @@ class TestMyUtils(unittest.TestCase):
     def test_mean_random_positive(self):
         # Property: mean is between min and max for any non-empty list
         for _ in range(25):
-            xs = [random.randint(-100, 100) for _ in range(random.randint(1, 20))]
+            xs = [random.randint(-100, 100)
+                  for _ in range(random.randint(1, 20))]
             m = mean(xs)
             self.assertTrue(min(xs) <= m <= max(xs))
 
@@ -28,7 +29,8 @@ class TestMyUtils(unittest.TestCase):
     def test_median_random_order_invariant(self):
         # Property: median does not depend on order of inputs
         for _ in range(25):
-            xs = [random.randint(-50, 50) for _ in range(random.randint(1, 21))]
+            xs = [random.randint(-50, 50)
+                  for _ in range(random.randint(1, 21))]
             a = median(xs)
             random.shuffle(xs)
             b = median(xs)

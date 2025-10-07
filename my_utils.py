@@ -30,14 +30,16 @@ def get_column(file_name, query_column, query_value, result_column=1):
             cell = row[result_column].strip()
             if cell == "":
                 raise ValueError(
-                    f"Row {i}: expected number at col {result_column}, got empty"
+                    f"Row {i}: expected number at col {result_column}, "
+                    f"got empty"
                 )
             try:
                 # Accept ints or decimals (e.g., "0.0"); return int list
                 value = int(float(cell))
             except ValueError as e:
                 raise ValueError(
-                    f"Row {i}: expected number at col {result_column}, got {cell!r}"
+                    f"Row {i}: expected number at col {result_column}, "
+                    f"got {cell!r}"
                 ) from e
             out.append(value)
     return out
