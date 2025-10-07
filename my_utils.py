@@ -33,7 +33,7 @@ def get_column(file_name, query_column, query_value, result_column=1):
                     f"Row {i}: expected number at col {result_column}, got empty"
                 )
             try:
-                # Accept ints or decimals (e.g., "0.0"); still return int list
+                # Accept ints or decimals (e.g., "0.0"); return int list
                 value = int(float(cell))
             except ValueError as e:
                 raise ValueError(

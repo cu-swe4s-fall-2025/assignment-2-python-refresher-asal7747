@@ -2,7 +2,8 @@
 """
 Assignment 3/4: Best Practices + Testing
 
-- Uses argparse with flags: --country, --country_column, --fires_column, --file_name
+- Uses argparse with flags: --country, --country_column, --fires_column,
+  --file_name
 - Optional --op to compute mean/median/stdev on the values
 - Uses a main() entry point
 - Exit codes: 0 on success; 1 if no matching rows; 2 on errors
